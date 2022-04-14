@@ -1,31 +1,70 @@
+# Světelná brána
 
-> Otevřít tuto stránku v aplikaci [https://smutnyjan.github.io/pxt-light-gate-extension/](https://smutnyjan.github.io/pxt-light-gate-extension/)
+## Namespace
+```
+lightGate
+```
+## Popis
+Toto rozšíření dovoluje využít senzor intenzity světla pro vytvoření jednoduché světelné závory, která dokáže detekovat pohyb.
+ 
+## Metody
+### Zkalibruj a nastav toleranci %tol
+```
+function calibrate(dev: Deviation): void
+```
+- Spustí kalibraci a nastaví toleranci
+- Parametry:
+    - tolerance (enum)
+- Bez návratové hodnoty
 
-## Použít jako rozšíření
+### Při porušení hladiny světla
+```
+function onLightLevelDrop(action: () => void)
+```
+- Zkontroluje, jestli došlo k porušení hladiny světla
+- Parametry:
+    - metoda (delegát)
+- Bez návratové hodnoty
 
-Toto úložiště lze přidat jako **rozšíření** v aplikaci MakeCode.
+## Enumy
+```
+enum Deviation {
+    Small = 10,
+    Medium  = 20,
+    Large = 30,
+}
+```
 
-* otevřít [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* klikněte na možnost **Nový projekt**
-* klikněte na možnost **Rozšíření** v nabídce s ozubeným kolem
-* vyhledat **https://github.com/smutnyjan/pxt-light-gate-extension** a importovat
+## Příklady
 
-## Upravit tento projekt ![Odznak stavu sestavení](https://github.com/smutnyjan/pxt-light-gate-extension/workflows/MakeCode/badge.svg)
+### Světelná brána bez zapínání/vypínání
 
-Slouží k úpravě tohoto úložiště v aplikaci MakeCode.
+#### Bloky
+![Použítí světelné brány](https://github.com/SmutnyJan/pxt-light-gate/blob/master/images/easyexample.png)
+#### Kód
+```
+lightGate.onLightLevelDrop(function () {
+    music.playTone(262, music.beat(BeatFraction.Whole))
+})
+lightGate.calibrate(Deviation.Medium)
+```
 
-* otevřít [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* klikněte na možnost **Import** a poté na **Import adresy URL**
-* vložte **https://github.com/smutnyjan/pxt-light-gate-extension** a klikněte na možnost import
+### Světelná brána s zapínání/vypínání
+#### Bloky
+![Použítí světelné brány s vypínáním a zapínáním](https://github.com/SmutnyJan/pxt-light-gate/blob/master/images/hardexample.png)
 
-## Náhled bloků
-
-Tento obrázek znázorňuje kód z Bloků od posledního potvrzení v hlavní verzi.
-Tento obrázek se může aktualizovat až za několik minut.
-
-![Vykreslený náhled bloků](https://github.com/smutnyjan/pxt-light-gate-extension/raw/master/.github/makecode/blocks.png)
-
-#### Metadata (slouží k vyhledávání, vykreslování)
-
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+#### Kód
+```
+let jeHraZapnuta = false
+input.onButtonPressed(Button.A, function () {
+    if (jeHraZapnuta == false) {
+        lightGate.calibrate(Deviation.Medium)
+    }
+    jeHraZapnuta = !(jeHraZapnuta)
+})
+lightGate.onLightLevelDrop(function () {
+    if (jeHraZapnuta) {
+        music.playTone(330, music.beat(BeatFraction.Whole))
+    }
+})
+```
