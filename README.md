@@ -40,7 +40,7 @@ enum Deviation {
 ### Světelná brána bez zapínání/vypínání
 
 #### Bloky
-![Použítí světelné brány](https://github.com/SmutnyJan/pxt-light-gate/blob/master/images/easyexample.png)
+![Použítí světelné brány](https://github.com/microbit-cz/pxt-light-gate-extension/blob/master/images/easyexample.png)
 #### Kód
 ```
 lightGate.onLightLevelDrop(function () {
@@ -48,10 +48,12 @@ lightGate.onLightLevelDrop(function () {
 })
 lightGate.calibrate(Deviation.Medium)
 ```
+Demo  [https://github.com/microbit-cz/pxt-light-gate-demo-easy](https://github.com/microbit-cz/pxt-light-gate-demo-easy)
+
 
 ### Světelná brána s zapínání/vypínání
 #### Bloky
-![Použítí světelné brány s vypínáním a zapínáním](https://github.com/SmutnyJan/pxt-light-gate/blob/master/images/hardexample.png)
+![Použítí světelné brány s vypínáním a zapínáním](https://github.com/microbit-cz/pxt-light-gate-extension/blob/master/images/hardexample.png)
 
 #### Kód
 ```
@@ -68,3 +70,6 @@ lightGate.onLightLevelDrop(function () {
     }
 })
 ```
+
+Demo  [https://github.com/microbit-cz/pxt-light-gate-demo-hard](https://github.com/microbit-cz/pxt-light-gate-demo-hard)
+
